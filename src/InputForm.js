@@ -1,103 +1,116 @@
 import React, { Component } from 'react'
 
+// Ramda
+import * as R from 'ramda';
+
+
+
+let initialState = {
+  number: null,
+  numberExponent: null,
+  units: null,
+  unitsExponent: null,
+  meterExponent: null,
+  meterValue: null,
+};
 
 class InputForm extends Component {
 
-  // Setup state of the form and initial state
-
-  constructor(props) {
-    super(props)
-
-    this.initialState = {
-      num: '',
-      expon: '',
-      units: '',
-    }
-
-    this.state = this.initialState
-  }
+  state = initialState;
 
   // code for setting the state of num, expon, units whenever a change is made
 
-handleChange = event => {
-  const { name, value } = event.target
-// The [ ] brackets here are the setState synatx
-  this.setState({
-    [name]: value,
-  })
-}
-
- // Submit button action.  On click, use App.js's handleSubmit to append form
-  // data to previous data
-
-  submitForm = () => {
-    // handleSubmit appends new data using the current state of the form
-    this.props.handleSubmit(this.state)
-    this.setState(this.initialState)
+  handleChange = event => {
+    let { name, value } = event.target
+    // The [ ] brackets here are the setState synatx
+    this.setState({
+      [name]: value,
+    })
   }
 
-  
-    render() {
-
-      const {num, expon,units}=this.state
-
-
-      return (
-
-        <div>
-      <form>
-
-
-      <label for="num">Number</label>
-        <input
-          type="number"
-          name="num"
-          id="num"
-          value={num}
-          onChange={this.handleChange} 
-          autoFocus/>
+  // Special code for units
+  handleUnitsChange = event => {
+    let { value } = event.target
+    // find which  unit was selected
+    let unitsIndex=R.findIndex(R.propEq('units', value))(this.props.unitsSet);
+    let chosenUnit=this.props.unitsSet[unitsIndex]
+    this.setState({
+      units: chosenUnit.units,
+      meterExponent: chosenUnit.meterExponent,
+      meterValue: chosenUnit.meterValue,
+    })
+  }
 
 
-          <label for="expon">Exponent</label>
-        <input
-          type="number"
-          name="expon"
-          id="expon"
-          value={expon}
-          onChange={this.handleChange} 
+  render() {
+
+    let { number, numberExponent, unitsExponent, units } = this.state;
+    let { handleSubmit, unitsSet } = this.props;
+
+
+    // Units options
+    let unitsFill = R.map((x) => { return (<option key={x.units} value={x.units}>{x.units}</option>) }, unitsSet);
+
+
+
+    return (
+
+      <div>
+        <form>
+
+
+          <label>Number</label>
+          <input
+            type="number"
+            name="number"
+            id="number"
+            onChange={this.handleChange}
+            autoFocus />
+
+
+          <label>Exponent</label>
+          <input
+            type="number"
+            name="numberExponent"
+            id="numberExponent"
+            onChange={this.handleChange}
           />
 
-          <label for="units">Units </label>
+          <label>Units </label>
           <select
-          name="units"
-          id="units"
-          value=""
-          onChange={this.handleChange}
+            name="units"
+            id="units"
+            value={units ? units : undefined}
+            onChange={this.handleUnitsChange}
           >
-          <option value=""></option>
-          <option value={1}> m </option>
-          <option value={1.9*10**(-16)}>GeV</option>
+            <option value=""></option>
+            {unitsFill}
           </select>
 
-      </form>
+          <label>Unit Exponent</label>
+          <input
+            type="number"
+            name="unitsExponent"
+            id="unitsExponent"
+            onChange={this.handleChange}
+          />
 
-      <input 
-type="button"
-value="Submit"
- onClick={this.submitForm}
- />
+        </form>
 
-<input 
-type="button"
-value={this.state.units}
- />
+        <input
+          type="button"
+          value="Submit"
+          onClick={() => handleSubmit(
+            this.state
+          )}
+        />
 
 
-</div>
-      )
-    }
-    
+      </div>
+    )
   }
+
+}
 
 
 export default InputForm
