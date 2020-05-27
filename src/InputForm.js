@@ -32,8 +32,8 @@ class InputForm extends Component {
   handleUnitsChange = event => {
     let { value } = event.target
     // find which  unit was selected
-    let unitsIndex=R.findIndex(R.propEq('units', value))(this.props.unitsSet);
-    let chosenUnit=this.props.unitsSet[unitsIndex]
+    let unitsIndex = R.findIndex(R.propEq('units', value))(this.props.unitsSet);
+    let chosenUnit = this.props.unitsSet[unitsIndex]
     this.setState({
       units: chosenUnit.units,
       meterExponent: chosenUnit.meterExponent,
@@ -44,13 +44,12 @@ class InputForm extends Component {
 
   render() {
 
-    let { number, numberExponent, unitsExponent, units } = this.state;
-    let { handleSubmit, unitsSet } = this.props;
+    let { units } = this.state;
+    let { handleSubmit, handleReset, handleOutputUnitChange, unitsSet, outputUnit } = this.props;
 
 
     // Units options
     let unitsFill = R.map((x) => { return (<option key={x.units} value={x.units}>{x.units}</option>) }, unitsSet);
-
 
 
     return (
@@ -95,6 +94,16 @@ class InputForm extends Component {
             onChange={this.handleChange}
           />
 
+
+          <label>Output Unit </label>
+          <select
+            name="outputUnit"
+            id="outputUnit"
+            value={outputUnit ? outputUnit : undefined}
+            onChange={handleOutputUnitChange}
+          >
+            {unitsFill}
+          </select>
         </form>
 
         <input
@@ -103,6 +112,13 @@ class InputForm extends Component {
           onClick={() => handleSubmit(
             this.state
           )}
+        />
+        <input
+          type="button"
+          value="Reset"
+          onClick={() => {
+            handleReset();
+          }}
         />
 
 

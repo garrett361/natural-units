@@ -7,6 +7,71 @@ import * as R from 'ramda';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 
+// Create a fuction to separate exponential notation numbers into a prefactor and an exponent
+let exponentSeparate = (x) => {
+  let regexpDigit = /[e]/;
+  let result = {};
+  result.number = x.slice(0, regexpDigit.exec(x).index);
+  result.numberExponent = x.slice(regexpDigit.exec(x).index + 1, x.length);
+  return ([Number(result.number).toPrecision(3), Number(result.numberExponent)]);
+};
+
+// Standardized latex output
+let LatexOutput = (props) => {
+  let { number, numberExponent, units, unitsExponent } = props;
+  if (unitsExponent !== 0) {
+    return (
+      <InlineMath>
+        {number + '\\times 10^{' + numberExponent + '} \\  \\mathrm{' + units + '} ^{' + unitsExponent + '}'}
+      </InlineMath>
+    );
+  } else {
+    return (
+      <InlineMath>
+        {number + '\\times 10^{' + numberExponent + '} '}
+      </InlineMath>
+    );
+  }
+};
+
+// Standardized factored latex output
+
+let LatexOutputFactored = (props) => {
+  let { number, numberExponent, units, unitsExponent } = props;
+  return (
+    <InlineMath>
+      {' \\left (' + number + '\\times 10^{' + numberExponent + '} \\  \\mathrm{' + units + '} \\right) ^{' + unitsExponent + '}'}
+    </InlineMath>
+  );
+};
+
+// Multiplying together all meters values input array and turning into a single number, exponent pair
+let meterValues = (array) => {
+  let output = {};
+  output.numberTotal = R.reduce((a, b) => { return ((b.number * (10 ** (b.numberExponent)) * Math.pow(b.meterValue, b.meterExponent)) * a) }, 1, array).toExponential()
+  output.number = exponentSeparate(output.numberTotal)[0];
+  output.numberExponent = exponentSeparate(output.numberTotal)[1];
+  output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent + a) }, 0, array);
+  return (
+    output
+  );
+};
+// Same as above, but factorizing
+let meterValuesFactored = (array) => {
+  let output = {};
+  output.numberTotal = R.reduce((a, b) => { return ((b.number * (10 ** (b.numberExponent)) * Math.pow(b.meterValue, b.meterExponent)) * a) }, 1, array).toExponential()
+  output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent + a) }, 0, array);
+  if (output.meterExponent) {
+    output.root = Math.pow(output.numberTotal, 1 / output.meterExponent).toExponential();
+    output.rootNumber = exponentSeparate(output.root)[0];
+    output.rootNumberExponent = exponentSeparate(output.root)[1];
+    return (
+      output
+    );
+  } else {
+    return (output)
+  };
+};
 
 let OutputTable = (props) => {
 
@@ -19,43 +84,51 @@ let OutputTable = (props) => {
   let inputFill = input.map((x, i) => {
     return (
       <li key={i}>
-        <InlineMath>
-          {x.number + '\\times 10^{' + x.numberExponent + '} \\  \\mathrm{' + x.units + '} ^{' + x.unitsExponent + '}'}
-        </InlineMath>
+        <LatexOutput
+          number={x.number}
+          numberExponent={x.numberExponent}
+          units={x.units}
+          unitsExponent={x.unitsExponent} />
       </li>
     )
   });
 
-  // Combine all inputs into a single meters value
-  // need some RegExp code to separate out exponential notation
-  let regexpDigit = /[e]/;
-  let output = {};
-  if (input[0]) {
-    output.numberTotal = R.reduce((a, b) => { return ((b.number * (10 ** (b.numberExponent)) * Math.pow(b.meterValue, b.meterExponent)) * a) }, 1, input).toExponential()
-    console.log(output.numberTotal);
-    output.number = output.numberTotal.slice(0, regexpDigit.exec(output.numberTotal).index);
-    output.numberExponent = output.numberTotal.slice(regexpDigit.exec(output.numberTotal).index + 1, output.numberTotal.length);
-    // output.numberTotalExponent = R.reduce(R.add, 0, R.pluck('numberExponent', input));
-    output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent + a) }, 0, input)
-    output.root = Math.pow(output.numberTotal, 1 / output.meterExponent).toExponential();
-    output.rootNumber=output.root.slice(0, regexpDigit.exec(output.root).index);
-    output.rootNumberExponent=output.root.slice(regexpDigit.exec(output.root).index + 1, output.root.length);
-  };
- 
-
   return (
     <div>
-      <ul>
-        {inputFill}
-      </ul>
-      <h1>\(\int\)</h1>
-      <h2>{input[0] && output.value}</h2>
       {input[0]
         &&
         <div>
-          <InlineMath>
-            {Math.pow(output.number, 1).toPrecision(3) + '\\times 10^{' + output.numberExponent + '} \\mathrm{m}' + '^{' + output.meterExponent + '}=' + '(' + Math.pow(output.rootNumber,1).toPrecision(3) + '\\times 10^{' + output.rootNumberExponent + '} \\mathrm{m})^{' + output.meterExponent + '}'}
-          </InlineMath>
+          <h3>
+            Input
+           </h3>
+          <ul>
+            {inputFill}
+          </ul>
+          <h3>
+            Output
+           </h3>
+          <LatexOutput
+            number={meterValues(input).number}
+            numberExponent={meterValues(input).numberExponent}
+            units={'m'}
+            unitsExponent={meterValues(input).meterExponent}
+          />
+
+          {meterValuesFactored(input).meterExponent !== 0
+            &&
+            <span>
+              <InlineMath>
+                =
+              </InlineMath>
+              <LatexOutputFactored
+                number={meterValuesFactored(input).rootNumber}
+                numberExponent={meterValuesFactored(input).rootNumberExponent}
+                units={'m'}
+                unitsExponent={meterValuesFactored(input).meterExponent}
+              />
+            </span>
+          }
+
         </div>
       }
     </div>
