@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/natural-units/static/css/main.dc414793.chunk.css",
+    "main.js": "/natural-units/static/js/main.71649d41.chunk.js",
+    "main.js.map": "/natural-units/static/js/main.71649d41.chunk.js.map",
+    "runtime-main.js": "/natural-units/static/js/runtime-main.0abcd5f5.js",
+    "runtime-main.js.map": "/natural-units/static/js/runtime-main.0abcd5f5.js.map",
+    "static/css/2.d044edb9.chunk.css": "/natural-units/static/css/2.d044edb9.chunk.css",
+    "static/js/2.ed59cfc0.chunk.js": "/natural-units/static/js/2.ed59cfc0.chunk.js",
+    "static/js/2.ed59cfc0.chunk.js.map": "/natural-units/static/js/2.ed59cfc0.chunk.js.map",
+    "index.html": "/natural-units/index.html",
+    "precache-manifest.ae03af7bf34345dbe0069232de6f0c33.js": "/natural-units/precache-manifest.ae03af7bf34345dbe0069232de6f0c33.js",
+    "service-worker.js": "/natural-units/service-worker.js",
+    "static/css/2.d044edb9.chunk.css.map": "/natural-units/static/css/2.d044edb9.chunk.css.map",
+    "static/css/main.dc414793.chunk.css.map": "/natural-units/static/css/main.dc414793.chunk.css.map",
+    "static/js/2.ed59cfc0.chunk.js.LICENSE.txt": "/natural-units/static/js/2.ed59cfc0.chunk.js.LICENSE.txt",
+    "static/media/katex.min.css": "/natural-units/static/media/KaTeX_Typewriter-Regular.f43e8696.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0abcd5f5.js",
+    "static/css/2.d044edb9.chunk.css",
+    "static/js/2.ed59cfc0.chunk.js",
+    "static/css/main.dc414793.chunk.css",
+    "static/js/main.71649d41.chunk.js"
+  ]
+}
