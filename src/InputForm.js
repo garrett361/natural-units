@@ -7,9 +7,8 @@ import * as R from 'ramda';
 
 let initialState = {
   number: null,
-  numberExponent: null,
   units: null,
-  unitsExponent: null,
+  unitsExponent: 0,
   meterExponent: null,
   meterValue: null,
 };
@@ -18,7 +17,7 @@ class InputForm extends Component {
 
   state = initialState;
 
-  // code for setting the state of num, expon, units whenever a change is made
+  // code for handling changes
 
   handleChange = event => {
     let { name, value } = event.target
@@ -44,12 +43,12 @@ class InputForm extends Component {
 
   render() {
 
-    let { units } = this.state;
-    let { handleSubmit, handleReset, handleOutputUnitChange, unitsSet, outputUnit } = this.props;
+    let { number, units, unitsExponent } = this.state;
+    let { handleSubmit, unitsSet } = this.props;
 
 
     // Units options
-    let unitsFill = R.map((x) => { return (<option key={x.units} value={x.units}>{x.units}</option>) }, unitsSet);
+    let unitsFill = R.map((x) => { return (<option key={x.units} >{x.units}</option>) }, unitsSet);
 
 
     return (
@@ -63,23 +62,17 @@ class InputForm extends Component {
             type="number"
             name="number"
             id="number"
+            value={number || ''}
             onChange={this.handleChange}
             autoFocus />
 
 
-          <label>Exponent</label>
-          <input
-            type="number"
-            name="numberExponent"
-            id="numberExponent"
-            onChange={this.handleChange}
-          />
 
           <label>Units </label>
           <select
             name="units"
             id="units"
-            value={units ? units : undefined}
+            value={units || ''}
             onChange={this.handleUnitsChange}
           >
             <option value=""></option>
@@ -91,33 +84,34 @@ class InputForm extends Component {
             type="number"
             name="unitsExponent"
             id="unitsExponent"
+            value={unitsExponent || ''}
             onChange={this.handleChange}
           />
 
-
-          <label>Output Unit </label>
-          <select
-            name="outputUnit"
-            id="outputUnit"
-            value={outputUnit ? outputUnit : undefined}
-            onChange={handleOutputUnitChange}
-          >
-            {unitsFill}
-          </select>
         </form>
 
         <input
           type="button"
           value="Submit"
-          onClick={() => handleSubmit(
-            this.state
-          )}
+          onClick={() => {
+            if (number) {
+              handleSubmit(
+                this.state
+              );
+              this.setState(initialState);
+            }
+            else {
+              alert('Please enter a number');
+              this.setState(initialState);
+            }
+          }
+          }
         />
         <input
           type="button"
-          value="Reset"
+          value="Clear"
           onClick={() => {
-            handleReset();
+            this.setState(initialState);
           }}
         />
 
