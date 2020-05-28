@@ -11,6 +11,7 @@ let initialState = {
   unitsExponent: 0,
   meterExponent: null,
   meterValue: null,
+  overallExponent: 1,
 };
 
 class InputForm extends Component {
@@ -43,7 +44,7 @@ class InputForm extends Component {
 
   render() {
 
-    let { number, units, unitsExponent } = this.state;
+    let { number, units, unitsExponent, overallExponent } = this.state;
     let { handleSubmit, unitsSet } = this.props;
 
 
@@ -88,20 +89,29 @@ class InputForm extends Component {
             onChange={this.handleChange}
           />
 
+          <label>Overall Exponent</label>
+          <input
+            type="number"
+            name="overallExponent"
+            id="overallExponent"
+            value={overallExponent}
+            onChange={this.handleChange}
+          />
+
         </form>
 
         <input
           type="button"
           value="Submit"
           onClick={() => {
-            if (number) {
+            if (number && Number(overallExponent)!==0) {
               handleSubmit(
                 this.state
               );
               this.setState(initialState);
             }
             else {
-              alert('Please enter a number');
+              alert('Please enter a number/non-zero overall exponent');
               this.setState(initialState);
             }
           }

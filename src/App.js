@@ -9,7 +9,7 @@ import Presets from './Presets';
 
 // set of units, all re-expressed in terms of a meters value and a power
 //  if meterExponent=1, then the meterValue is the value of 1m in [units]
-// if meterExponent=-1, then meterValue is the value of 1m in [units]^{-1}
+// if meterExponent=-1, then meterValue is the value of 1m in [units]^{-1}, etc
 let unitsSet = [
   {
     units: 'cm',
@@ -30,6 +30,11 @@ let unitsSet = [
     units: 's',
     meterExponent: 1,
     meterValue: 3.33 * 10 ** (-9),
+  },
+  {
+    units: 'years',
+    meterExponent: 1,
+    meterValue: 1.06 * 10 ** (-16),
   },
   {
     units: 'eV',
@@ -76,8 +81,40 @@ let unitsSet = [
 // preset quantities, all expressed in terms of meters.  preset should equal [number]*m^[meterExponent]
 let presetsSet = [
   {
+    name: "Hubble's Constant (Planck 2018)",
+    latex: 'H_{0}',
+    state: {
+      number: 7.28 * 10 ** -27,
+      meterExponent: -1,
+    }
+  },
+  {
+    name: 'Electron mass',
+    latex: 'm_{e}',
+    state: {
+      number: 2.59 * 10 ** 12,
+      meterExponent: -1,
+    }
+  },
+  {
+    name: 'Proton mass',
+    latex: 'm_{p}',
+    state: {
+      number: 4.75 * 10 ** 15,
+      meterExponent: -1,
+    }
+  },
+  {
+    name: 'Higgs mass',
+    latex: 'm_{H}',
+    state: {
+      number: 6.33 * 10 ** 17,
+      meterExponent: -1,
+    }
+  },
+  {
     name: 'Reduced Planck Mass',
-    latex: 'M_{p}',
+    latex: 'M_{\\rm pl}',
     state: {
       number: 1.28 * 10 ** 34,
       meterExponent: -1,

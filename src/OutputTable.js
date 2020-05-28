@@ -17,6 +17,9 @@ let exponentSeparate = (x) => {
   return ([Number(result.number).toPrecision(3), Number(result.numberExponent)]);
 };
 
+
+
+
 // Standardized latex output
 let LatexOutput = (props) => {
   let { input } = props;
@@ -45,15 +48,23 @@ let LatexOutput = (props) => {
       if (Number(input.unitsExponent) !== 1) {
         unitfactor = '\\  \\mathrm{' + input.units + '} ^{' + input.unitsExponent + '}';
       } else {
-        unitfactor = '\\  \\mathrm{' + input.units +'}';
+        unitfactor = '\\  \\mathrm{' + input.units + '}';
       };
     }
 
-    return (
-      <InlineMath>
-        {numbersplit[0] + tenpower + unitfactor}
-      </InlineMath>
-    );
+    if (input.overallExponent && input.overallExponent !== 1) {
+      return (
+        <InlineMath>
+          {'\\left(' + numbersplit[0] + tenpower + unitfactor + '\\right)^{' + input.overallExponent + '}'}
+        </InlineMath>
+      )
+    } else {
+      return (
+        <InlineMath>
+          {numbersplit[0] + tenpower + unitfactor}
+        </InlineMath>
+      );
+    };
   };
 };
 
@@ -79,12 +90,68 @@ let LatexOutputFactored = (props) => {
   );
 };
 
+// Standardized latex input, takes input *array* and organizes latex vs non-latex components to display nicely
+let LatexInput = (props) => {
+  let { input } = props;
+  // Split into latexed and non-latex parts
+  let inputLatex = R.filter(R.has('latex'), input);
+  let inputNonLatex = R.difference(input, inputLatex);
 
-// Multiplying together all meters values input array and turning into a single number, exponent pair
+  // Then format the latexed output
+  let inputLatexNumerator = R.filter(x => x.presetExponent > 0, inputLatex);
+  let inputLatexDenominator = R.filter(x => x.presetExponent < 0, inputLatex);
+  // reduce function for latexing
+  let latexReduce = (a, b) => {
+    if (Math.abs(b.presetExponent) === 1) {
+      return (a + b.latex)
+    } else {
+      return (a + b.latex + '^{' + Math.abs(b.presetExponent) + '}')
+    }
+  }
+
+  let inputLatexNumeratorConcat = R.reduce(latexReduce, '', inputLatexNumerator);
+  let inputLatexDenominatorConcat = R.reduce(latexReduce, '', inputLatexDenominator);
+
+  // Final output for latexed presets:
+  let latexFinal=''
+  if(inputLatexDenominatorConcat && inputLatexNumeratorConcat) {
+    latexFinal='\\frac{'+inputLatexNumeratorConcat+'}{'+inputLatexDenominatorConcat+'}';
+  } else if(inputLatexDenominatorConcat && !inputLatexNumeratorConcat) {
+    latexFinal='\\frac{1}{'+inputLatexDenominatorConcat+'}';
+  } else {
+    latexFinal=inputLatexNumeratorConcat;
+  }
+
+  let latexFinalFill=<li key={'latex'}><InlineMath>{latexFinal}</InlineMath></li>;
+
+  // Output for non-latexed inputs
+  let inputNonLatexFill = inputNonLatex.map((x, i) => {
+    return (
+      <li key={i}>
+        <LatexOutput
+          input={x}
+        />
+      </li>
+    )
+  });
+
+  
+  return (
+    <ul className={"no-li-marks"}>
+      {inputNonLatexFill}
+      <li key={'blank'}></li>
+      {latexFinalFill}
+    </ul>
+  );
+
+};
+
+
+// Multiplying together all meters values input array and turning into a single number, exponent pair.
 let meterValues = (array) => {
   let output = {};
-  output.number = R.reduce((a, b) => { return ((Number(b.number) * Math.pow(b.meterValue, -b.meterExponent * b.unitsExponent)) * a) }, 1, array).toExponential()
-  output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent + a) }, 0, array);
+  output.number = R.reduce((a, b) => { return (Math.pow((Number(b.number) * Math.pow(b.meterValue, -b.meterExponent * b.unitsExponent)), b.overallExponent) * a) }, 1, array).toExponential()
+  output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent * b.overallExponent + a) }, 0, array);
   return (
     output
   );
@@ -134,16 +201,6 @@ let OutputTable = (props) => {
   // Each input value contains (number, numberExponent, units, unitsExponent,meterExponent,meterValue) properties
 
 
-  // Latexed list of all inputs
-  let inputFill = input.map((x, i) => {
-    return (
-      <li key={i}>
-        <LatexOutput
-          input={x}
-        />
-      </li>
-    )
-  });
 
 
   return (
@@ -167,9 +224,9 @@ let OutputTable = (props) => {
           <h4>
             Input Factors
            </h4>
-          <ul className={"no-li-marks"}>
-            {inputFill}
-          </ul>
+          <LatexInput
+            input={input}
+          />
 
           <h4>
             Net Result

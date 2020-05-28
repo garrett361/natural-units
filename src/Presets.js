@@ -62,6 +62,7 @@ class Presets extends Component {
             output.meterValue = 1;
             output.units = 'm';
             output.unitsExponent = exponent;
+            output.overallExponent = 1;
             let presetsIndex = R.findIndex(R.propEq('name', this.state.presetName))(this.props.presetsSet);
             output.latex = presetsSet[presetsIndex].latex;
             return (output)
