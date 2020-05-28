@@ -44,12 +44,14 @@ let LatexOutput = (props) => {
       tenpower = '\\times 10^{' + numbersplit[1] + '}';
     }
     let unitfactor = '';
-    if (Number(input.unitsExponent)) {
-      if (Number(input.unitsExponent) !== 1) {
-        unitfactor = '\\  \\mathrm{' + input.units + '} ^{' + input.unitsExponent + '}';
-      } else {
-        unitfactor = '\\  \\mathrm{' + input.units + '}';
-      };
+    if (input.units !== 'GN') {
+      if (Number(input.unitsExponent)) {
+        if (Number(input.unitsExponent) !== 1) {
+          unitfactor = '\\  \\mathrm{' + input.units + '} ^{' + input.unitsExponent + '}';
+        } else {
+          unitfactor = '\\  \\mathrm{' + input.units + '}';
+        };
+      }
     }
 
     if (input.overallExponent && input.overallExponent !== 1) {
@@ -113,16 +115,16 @@ let LatexInput = (props) => {
   let inputLatexDenominatorConcat = R.reduce(latexReduce, '', inputLatexDenominator);
 
   // Final output for latexed presets:
-  let latexFinal=''
-  if(inputLatexDenominatorConcat && inputLatexNumeratorConcat) {
-    latexFinal='\\frac{'+inputLatexNumeratorConcat+'}{'+inputLatexDenominatorConcat+'}';
-  } else if(inputLatexDenominatorConcat && !inputLatexNumeratorConcat) {
-    latexFinal='\\frac{1}{'+inputLatexDenominatorConcat+'}';
+  let latexFinal = ''
+  if (inputLatexDenominatorConcat && inputLatexNumeratorConcat) {
+    latexFinal = '\\frac{' + inputLatexNumeratorConcat + '}{' + inputLatexDenominatorConcat + '}';
+  } else if (inputLatexDenominatorConcat && !inputLatexNumeratorConcat) {
+    latexFinal = '\\frac{1}{' + inputLatexDenominatorConcat + '}';
   } else {
-    latexFinal=inputLatexNumeratorConcat;
+    latexFinal = inputLatexNumeratorConcat;
   }
 
-  let latexFinalFill=<li key={'latex'}><InlineMath>{latexFinal}</InlineMath></li>;
+  let latexFinalFill = <li key={'latex'}><InlineMath>{latexFinal}</InlineMath></li>;
 
   // Output for non-latexed inputs
   let inputNonLatexFill = inputNonLatex.map((x, i) => {
@@ -135,7 +137,7 @@ let LatexInput = (props) => {
     )
   });
 
-  
+
   return (
     <ul className={"no-li-marks"}>
       {inputNonLatexFill}
@@ -189,13 +191,13 @@ let unitConvertorFactored = (input, outputUnit, unitsSet) => {
 
 let OutputTable = (props) => {
 
-  let { input, unitsSet, handleOutputUnitChange, outputUnit, handleReset } = props;
+  let { input, unitsSet, handleOutputUnitChange, outputUnit, handleReset, GNis1, handleGNis1Toggle } = props;
 
   let outputInFinalUnits = unitConvertor(input, outputUnit, unitsSet);
   let outputInFinalUnitsFactored = unitConvertorFactored(input, outputUnit, unitsSet);
 
   // Units options
-  let unitsFill = R.map((x) => { return (<option key={x.units} value={x.units}>{x.units}</option>) }, unitsSet);
+  let unitsFill = R.map((x) => { if (x.units === 'GN') { return null } else { return (<option key={x.units} value={x.units}>{x.units}</option>) } }, unitsSet);
 
 
   // Each input value contains (number, numberExponent, units, unitsExponent,meterExponent,meterValue) properties
@@ -205,17 +207,27 @@ let OutputTable = (props) => {
 
   return (
     <div>
-      <form>
-        <label>Output Unit </label>
-        <select
-          name="outputUnit"
-          id="outputUnit"
-          value={outputUnit ? outputUnit : undefined}
-          onChange={handleOutputUnitChange}
-        >
-          {unitsFill}
-        </select>
-      </form>
+      <label>
+        <input
+          type={'checkbox'}
+          checked={GNis1}
+          onChange={handleGNis1Toggle} />
+      \(\ G_N=1\)
+      </label>
+      {!GNis1 &&
+        <form>
+          <label>Output Unit </label>
+          <select
+            name="outputUnit"
+            id="outputUnit"
+            value={outputUnit ? outputUnit : undefined}
+            onChange={handleOutputUnitChange}
+          >
+            {unitsFill}
+          </select>
+        </form>
+      }
+
 
 
       {input[0]
@@ -236,7 +248,7 @@ let OutputTable = (props) => {
               <LatexOutput
                 input={outputInFinalUnits}
               />
-              {outputInFinalUnits.unitsExponent !== 1 && outputInFinalUnits.unitsExponent !== 0
+              {outputInFinalUnits.unitsExponent !== 1 && outputInFinalUnits.unitsExponent !== 0 && outputInFinalUnits.units !== 'GN'
                 &&
                 <span>
                   <InlineMath>

@@ -962,3 +962,7 @@
 .katex {
   font-size: 2em !important;
 }
+
+p {
+  font-size: 1.3em;
+  margin: 0.67em 0; }

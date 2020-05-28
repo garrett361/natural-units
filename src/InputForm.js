@@ -49,8 +49,8 @@ class InputForm extends Component {
 
 
     // Units options
-    let unitsFill = R.map((x) => { return (<option key={x.units} >{x.units}</option>) }, unitsSet);
-
+    let unitsFill = R.map((x) => { if(x.units==='GN') {return null} else { return (<option key={x.units} value={x.units}>{x.units}</option>) }}, unitsSet);
+    
 
     return (
 

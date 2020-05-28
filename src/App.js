@@ -8,8 +8,7 @@ import Presets from './Presets';
 
 
 // set of units, all re-expressed in terms of a meters value and a power
-//  if meterExponent=1, then the meterValue is the value of 1m in [units]
-// if meterExponent=-1, then meterValue is the value of 1m in [units]^{-1}, etc
+// meterValue and meterExponent determiend by writing 1m=[meterValue]*[units]^[meterExponent]
 let unitsSet = [
   {
     units: 'cm',
@@ -76,7 +75,13 @@ let unitsSet = [
     meterExponent: 1,
     meterValue: 1 / (3.086 * 10 ** 22),
   },
+  {
+    units: 'GN',
+    meterExponent: .5,
+    meterValue:  6.41 * 10 ** 34,
+  },
 ];
+
 
 // preset quantities, all expressed in terms of meters.  preset should equal [number]*m^[meterExponent]
 let presetsSet = [
@@ -134,6 +139,7 @@ let presetsSet = [
 let initialState = {
   input: [],
   outputUnit: 'm',
+  GNis1: false,
 };
 
 class App extends Component {
@@ -155,10 +161,19 @@ class App extends Component {
     this.setState({ outputUnit: value });
   };
 
+  handleGNis1Toggle = () => {
+    this.setState({
+      GNis1: !this.state.GNis1,
+    })
+    if (this.state.GNis1) {
+      this.setState({ outputUnit: 'm' })
+    } else { this.setState({ outputUnit: 'GN' }) }
+  }
+
 
   render() {
 
-    let { input, outputUnit } = this.state;
+    let { input, outputUnit, GNis1 } = this.state;
 
     return (
 
@@ -166,6 +181,15 @@ class App extends Component {
         <h1>
           Natural Units Convertor
       </h1>
+
+        <p>
+          It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=1\), for instance, and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B\) as conversion factors.
+          In the General Relativity community, it's further common to set \(G_N=1\), in which case all quantites can be expressed at unitless numbers.
+      </p>
+
+        <p>
+          The calculator below implements such conversions.
+      </p>
 
         <h3>
           Preset Inputs
@@ -186,6 +210,8 @@ class App extends Component {
       </h3>
         <OutputTable
           input={input}
+          GNis1={GNis1}
+          handleGNis1Toggle={this.handleGNis1Toggle}
           unitsSet={unitsSet}
           outputUnit={outputUnit}
           handleReset={this.handleReset}
