@@ -10,10 +10,51 @@ import Presets from './Presets';
 // set of units, all re-expressed in terms of a meters value and a power
 // meterValue and meterExponent determiend by writing 1m=[meterValue]*[units]^[meterExponent]
 let unitsSet = [
+
+  {
+    units: 'eV',
+    meterExponent: -1,
+    meterValue: 5.06 * 10 ** 6,
+  },
+  {
+    units: 'keV',
+    meterExponent: -1,
+    meterValue: 5.06 * 10 ** 9,
+  },
+  {
+    units: 'MeV',
+    meterExponent: -1,
+    meterValue: 5.06 * 10 ** 12,
+  },
+  {
+    units: 'GeV',
+    meterExponent: -1,
+    meterValue: 5.06 * 10 ** 15,
+  },
+  {
+    units: 'J',
+    meterExponent: -1,
+    meterValue: 3.16 * 10 ** 25,
+  },
+  {
+    units: 'K',
+    meterExponent: -1,
+    meterValue: 436,
+  },
+  {
+    units: 'nm',
+    meterExponent: 1,
+    meterValue: 10 ** 9,
+  },
   {
     units: 'cm',
     meterExponent: 1,
     meterValue: 100,
+  },
+  {
+    units: 'ft',
+    meterExponent: 1,
+    meterValue: 3.28,
   },
   {
     units: 'm',
@@ -26,39 +67,14 @@ let unitsSet = [
     meterValue: 1 / 1000,
   },
   {
-    units: 's',
+    units: 'mi',
     meterExponent: 1,
-    meterValue: 3.33 * 10 ** (-9),
+    meterValue: .000621371192,
   },
   {
-    units: 'years',
+    units: 'au',
     meterExponent: 1,
-    meterValue: 1.06 * 10 ** (-16),
-  },
-  {
-    units: 'eV',
-    meterExponent: -1,
-    meterValue: 5.06 * 10 ** 6,
-  },
-  {
-    units: 'GeV',
-    meterExponent: -1,
-    meterValue: 5.06 * 10 ** 15,
-  },
-  {
-    units: 'K',
-    meterExponent: -1,
-    meterValue: 436,
-  },
-  {
-    units: 'g',
-    meterExponent: -1,
-    meterValue: 1 / (3.52 * 10 ** (-40)),
-  },
-  {
-    units: 'kg',
-    meterExponent: -1,
-    meterValue: 1 / (3.52 * 10 ** (-43)),
+    meterValue: 6.68 * 10 ** (-12),
   },
   {
     units: 'ly',
@@ -76,14 +92,54 @@ let unitsSet = [
     meterValue: 1 / (3.086 * 10 ** 22),
   },
   {
+    units: 'b',
+    meterExponent: .5,
+    meterValue: 1 * 10 ** 14,
+  },
+  {
+    units: 's',
+    meterExponent: 1,
+    meterValue: 3.33 * 10 ** (-9),
+  },
+  {
+    units: 'days',
+    meterExponent: 1,
+    meterValue: 3.86 * 10 ** (-14),
+  },
+  {
+    units: 'years',
+    meterExponent: 1,
+    meterValue: 1.06 * 10 ** (-16),
+  },
+  {
+    units: 'g',
+    meterExponent: -1,
+    meterValue: 1 / (3.52 * 10 ** (-40)),
+  },
+  {
+    units: 'lb',
+    meterExponent: -1,
+    meterValue: 1.29 * 10 ** 42,
+  },
+  {
+    units: 'kg',
+    meterExponent: -1,
+    meterValue: 1 / (3.52 * 10 ** (-43)),
+  },
+  {
+    units: 'ton',
+    meterExponent: -1,
+    meterValue: 2.58 * 10 ** 45,
+  },
+  {
     units: 'GN',
     meterExponent: .5,
-    meterValue:  6.41 * 10 ** 34,
-  },
+    meterValue: 6.41 * 10 ** 34,
+  }
 ];
 
 
-// preset quantities, all expressed in terms of meters.  preset should equal [number]*m^[meterExponent]
+// preset quantities, all expressed in terms of meters.  preset state should equal [number]*m^[meterExponent]
 let presetsSet = [
   {
     name: "Hubble's Constant (Planck 2018)",
@@ -131,6 +187,14 @@ let presetsSet = [
     state: {
       number: 5.89 * 10 ** 72,
       meterExponent: -1,
+    }
+  },
+  {
+    name: 'Fine structure constant',
+    latex: '\\alpha',
+    state: {
+      number: 1 / 137,
+      meterExponent: 0,
     }
   }
 ]
@@ -183,7 +247,7 @@ class App extends Component {
       </h1>
 
         <p>
-          It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=1\), for instance, and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B\) as conversion factors.
+          It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=1\) and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B\) as conversion factors.
           In the General Relativity community, it's further common to set \(G_N=1\), in which case all quantites can be expressed at unitless numbers.
       </p>
 

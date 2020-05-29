@@ -105,9 +105,9 @@ let LatexInput = (props) => {
   // reduce function for latexing
   let latexReduce = (a, b) => {
     if (Math.abs(b.presetExponent) === 1) {
-      return (a + b.latex)
+      return (a + ' '+ b.latex)
     } else {
-      return (a + b.latex + '^{' + Math.abs(b.presetExponent) + '}')
+      return (a +' '+ b.latex + '^{' + Math.abs(b.presetExponent) + '}')
     }
   }
 
