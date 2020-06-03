@@ -45,7 +45,7 @@ let LatexOutput = (props) => {
     }
     let unitfactor = '';
     if (input.units !== 'GN') {
-      if (Number(input.unitsExponent)) {
+      if (Number(input.unitsExponent) && input.units) {
         if (Number(input.unitsExponent) !== 1) {
           unitfactor = '\\  \\mathrm{' + input.units + '} ^{' + input.unitsExponent + '}';
         } else {

@@ -65,7 +65,7 @@ class App extends Component {
       </p>
 
         <p>
-          The calculator below implements such conversions.
+          The calculator below implements such conversions. 
       </p>
 
         <h3>
@@ -78,6 +78,9 @@ class App extends Component {
         <h3>
           Manual Input
       </h3>
+      <p>
+      Exponential notation can be used as in 1.23e4 \(=1.23\times 10^{4}\).
+      </p>
         <InputForm
           handleSubmit={this.handleSubmit}
           unitsSet={unitsSet} />

@@ -8,7 +8,7 @@ import * as R from 'ramda';
 let initialState = {
   number: null,
   units: null,
-  unitsExponent: 0,
+  unitsExponent: 1,
   meterExponent: null,
   meterValue: null,
   overallExponent: 1,
