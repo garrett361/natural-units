@@ -24,6 +24,11 @@ let unitsSet = [
       meterValue: 5.06 * 10 ** 15,
     },
     {
+      units: 'erg',
+      meterExponent: -1,
+      meterValue: 3.16 * 10 ** 18,
+    },
+    {
       units: 'J',
       meterExponent: -1,
       meterValue: 3.16 * 10 ** 25,
@@ -32,6 +37,11 @@ let unitsSet = [
       units: 'K',
       meterExponent: -1,
       meterValue: 436,
+    },
+    {
+      units: 'Å',
+      meterExponent: 1,
+      meterValue: 10 ** 10,
     },
     {
       units: 'nm',
