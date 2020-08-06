@@ -76,8 +76,8 @@ class Presets extends Component {
                 <form>
                     <label>Presets </label>
                     <select
-                        name="units"
-                        id="units"
+                        name="unitsPreset"
+                        id="unitsPreset"
                         value={presetName || ''}
                         onChange={this.handlePresetChange}
                     >

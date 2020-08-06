@@ -105,9 +105,9 @@ let LatexInput = (props) => {
   // reduce function for latexing
   let latexReduce = (a, b) => {
     if (Math.abs(b.presetExponent) === 1) {
-      return (a + ' '+ b.latex)
+      return (a + ' ' + b.latex)
     } else {
-      return (a +' '+ b.latex + '^{' + Math.abs(b.presetExponent) + '}')
+      return (a + ' ' + b.latex + '^{' + Math.abs(b.presetExponent) + '}')
     }
   }
 
@@ -150,10 +150,14 @@ let LatexInput = (props) => {
 
 
 // Multiplying together all meters values input array and turning into a single number, exponent pair.
+// Final output is has number and meterPower properties and corresponds to a number
+// of the form #=(number)*m^{meterPower}
 let meterValues = (array) => {
   let output = {};
-  output.number = R.reduce((a, b) => { return (Math.pow((Number(b.number) * Math.pow(b.meterValue, -b.meterExponent * b.unitsExponent)), b.overallExponent) * a) }, 1, array).toExponential()
-  output.meterExponent = R.reduce((a, b) => { return (b.unitsExponent * b.meterExponent * b.overallExponent + a) }, 0, array);
+  console.log(array);
+  output.number = R.reduce((a, b) => { return (Math.pow((Number(b.number) * Math.pow(b.meterValue, -b.unitsExponent / b.meterExponent)), b.overallExponent) * a) }, 1, array).toExponential()
+  output.meterPower = R.reduce((a, b) => { return (b.unitsExponent / b.meterExponent * b.overallExponent + a) }, 0, array);
+  console.log(output);
   return (
     output
   );
@@ -167,8 +171,8 @@ let unitConvertor = (input, outputUnit, unitsSet) => {
   let unitIndex = R.findIndex(R.propEq('units', outputUnit))(unitsSet);
   let finalUnit = unitsSet[unitIndex];
   let output = {};
-  output.number = ((meterValues(input).number) * Math.pow(finalUnit.meterValue, meterValues(input).meterExponent)).toExponential();
-  output.unitsExponent = finalUnit.meterExponent * meterValues(input).meterExponent;
+  output.number = ((meterValues(input).number) * Math.pow(finalUnit.meterValue, meterValues(input).meterPower)).toExponential();
+  output.unitsExponent = finalUnit.meterExponent * meterValues(input).meterPower;
   output.units = outputUnit;
   return (output);
 };
@@ -195,6 +199,7 @@ let OutputTable = (props) => {
 
   let outputInFinalUnits = unitConvertor(input, outputUnit, unitsSet);
   let outputInFinalUnitsFactored = unitConvertorFactored(input, outputUnit, unitsSet);
+
 
   // Units options
   let unitsFill = R.map((x) => { if (x.units === 'GN') { return null } else { return (<option key={x.units} value={x.units}>{x.units}</option>) } }, unitsSet);
