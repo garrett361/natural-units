@@ -119,6 +119,21 @@ let unitsSet = [
     meterValue: 1.06 * 10 ** (-16),
   },
   {
+    units: 'Hz',
+    meterExponent: -1,
+    meterValue: 3.3356 * 10 ** (-9),
+  },
+  {
+    units: 'MHz',
+    meterExponent: -1,
+    meterValue: 0.00333564095,
+  },
+  {
+    units: 'GHz',
+    meterExponent: -1,
+    meterValue: 3.33564095,
+  },
+  {
     units: 'g',
     meterExponent: -1,
     meterValue: 1 / (3.52 * 10 ** (-40)),
@@ -140,42 +155,42 @@ let unitsSet = [
   },
   {
     units: 'tsp',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 58.7601231,
   },
   {
     units: 'Tbsp',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 40.7419938,
   },
   {
     units: 'fl. oz.',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 32.3369419,
   },
   {
     units: 'cups',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 16.168471,
   },
   {
     units: 'pints',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 12.8329239,
   },
   {
     units: 'quarts',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 10.1854985,
   },
   {
     units: 'liters',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 10,
   },
   {
     units: 'gallons',
-    meterExponent: 1/3,
+    meterExponent: 1 / 3,
     meterValue: 6.41646195,
   },
   {
