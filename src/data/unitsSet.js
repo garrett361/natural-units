@@ -29,6 +29,16 @@ let unitsSet = [
     meterValue: 5.06 * 10 ** 15,
   },
   {
+    units: 'gauss',
+    meterExponent: -1 / 2,
+    meterValue: 389777.816,
+  },
+  {
+    units: 'tesla',
+    meterExponent: -1 / 2,
+    meterValue: 38977781.6,
+  },
+  {
     units: 'erg',
     meterExponent: -1,
     meterValue: 3.16 * 10 ** 18,

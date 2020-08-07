@@ -60,7 +60,7 @@ class App extends Component {
       </h1>
 
         <p>
-          It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=1\) and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B\) as conversion factors.
+          It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=e=1\) and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B,e\) as conversion factors.
           In the General Relativity community, it's further common to set \(G_N=1\), in which case all quantites can be expressed at unitless numbers.
       </p>
 
