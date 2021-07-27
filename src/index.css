@@ -24,6 +24,8 @@
  /* Defining some custom colors */
 
  :root {
+  --main-black: #3d4449;
+  --main-black-hover: #949596;
   --cambridge-blue: rgba(163, 193, 173, 0.99);
   --crimson-red: rgba(153, 0, 0, 0.99);
   --cornell-blue: rgba(0,104,172,0.99);
@@ -79,7 +81,7 @@
    * 2. Correct the odd `em` font sizing in all browsers.
    */
   pre {
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     /* 1 */
     font-size: 1em;
     /* 2 */ }
@@ -118,7 +120,7 @@
   code,
   kbd,
   samp {
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     /* 1 */
     font-size: 1em;
     /* 2 */ }
@@ -165,9 +167,9 @@
   optgroup,
   select,
   textarea {
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     /* 1 */
-    font-size: 100%;
+    font-size: 1em;
     /* 1 */
     line-height: 1.15;
     /* 1 */
@@ -347,8 +349,8 @@
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'Lato', serif;
-    font-size: 1rem; }
+    font-family: 'Roboto Slab', serif;
+    font-size: 1em; }
   
   body {
     color: #404040;
@@ -375,7 +377,7 @@
   h5 {
     margin: 1.5rem 0;
     font-weight: 600;
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     line-height: 1.2;
     color: #404040; }
     h1:not(:first-child),
@@ -422,10 +424,10 @@
       font-size: 1.25rem; } }
   
   a {
-    color: var(--crimson-red);
+    color: var(--main-black);
     text-decoration: none; }
     a:hover, a:active, a:focus {
-      color: var(--cornell-blue);
+      color: var(--main-black);
       text-decoration: underline; }
   
   mark {
@@ -450,11 +452,11 @@
     padding: 1rem;
     tab-size: 2;
     color: #404040;
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 14px;
     margin: 0 0 1.5rem 0; }
     pre code {
-      font-family: 'Lato', serif;
+      font-family: 'Roboto Slab', serif;
       line-height: 1.2; }
   
   kbd {
@@ -464,7 +466,7 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
     color: #333;
     display: inline-block;
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 13px;
     line-height: 1.4;
     margin: 0 .1em;
@@ -474,7 +476,7 @@
   :not(pre) > code {
     color: #404040;
     background: transparent;
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 14px;
     padding: 0 0.2rem;
     border: 1px solid #dedede;
@@ -645,12 +647,12 @@
   .button, a.button, button, [type=submit], [type=reset], [type=button] {
     -webkit-appearance: none;
     display: inline-block;
-    border: 1px solid var(--crimson-red);
+    border: 1px solid var(--main-black);
     border-radius: 4px;
-    background: var(--crimson-red);
+    background: var(--main-black);
     color: #ffffff;
     font-weight: 600;
-    font-family: 'Lato', serif;
+    font-family: 'Roboto Slab', serif;
     font-size: 1rem;
     text-transform: none;
     padding: .75rem 1.25rem;
@@ -663,7 +665,7 @@
   
   .button:hover, a.button:hover, button:hover, [type=submit]:hover, [type=reset]:hover, [type=button]:hover {
     border: 1px solid #0250bc;
-    background: #0250bc;
+    background: var(--main-black-hover);
     color: #ffffff;
     text-decoration: none; }
   
@@ -736,7 +738,7 @@
     border: 1px solid #c5c5c5; }
   
   [type=color]:focus, [type=color]:active, [type=date]:focus, [type=date]:active, [type=datetime]:focus, [type=datetime]:active, [type=datetime-local]:focus, [type=datetime-local]:active, [type=email]:focus, [type=email]:active, [type=month]:focus, [type=month]:active, [type=number]:focus, [type=number]:active, [type=password]:focus, [type=password]:active, [type=search]:focus, [type=search]:active, [type=tel]:focus, [type=tel]:active, [type=text]:focus, [type=text]:active, [type=url]:focus, [type=url]:active, [type=week]:focus, [type=week]:active, [type=time]:focus, [type=time]:active, select:focus, select:active, textarea:focus, textarea:active {
-    border: 1px solid var(--crimson-red);
+    border: 1px solid var(--main-black);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 6px #8cbcfe; }
   
   textarea {
@@ -906,7 +908,7 @@
     opacity: 0;
   }
   .switch-input:checked ~ .switch-label {
-    background: var(--crimson-red);
+    background: var(--main-black);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
   }
   .switch-input:checked ~ .switch-label:before {

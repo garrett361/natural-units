@@ -217,7 +217,7 @@ let OutputTable = (props) => {
           type={'checkbox'}
           checked={GNis1}
           onChange={handleGNis1Toggle} />
-      \(\ G_N=1\)
+        \(\ G_N=1\)
       </label>
       {!GNis1 &&
         <form>
@@ -240,14 +240,14 @@ let OutputTable = (props) => {
         <div>
           <h4>
             Input Factors
-           </h4>
+          </h4>
           <LatexInput
             input={input}
           />
 
           <h4>
             Net Result
-           </h4>
+          </h4>
           <ul className={"no-li-marks"}>
             <li>
               <LatexOutput
@@ -258,7 +258,7 @@ let OutputTable = (props) => {
                 <span>
                   <InlineMath>
                     =
-              </InlineMath>
+                  </InlineMath>
                   <LatexOutputFactored
                     input={outputInFinalUnitsFactored}
                   />
