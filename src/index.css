@@ -433,7 +433,7 @@
     color: var(--button-black);
     text-decoration: none; }
     a:hover, a:active, a:focus {
-      color: var(--button-black);
+      color: var(--button-black-hover);
       text-decoration: underline; }
   
   mark {
