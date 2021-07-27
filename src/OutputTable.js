@@ -7,6 +7,7 @@ import * as R from 'ramda';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 
+
 // Create a fuction to separate exponential notation numbers into a prefactor and an exponent
 let exponentSeparate = (x) => {
   let numx = Number(x).toExponential();
@@ -16,8 +17,6 @@ let exponentSeparate = (x) => {
   result.numberExponent = numx.slice(regexpDigit.exec(numx).index + 1, numx.length);
   return ([Number(result.number).toPrecision(3), Number(result.numberExponent)]);
 };
-
-
 
 
 // Standardized latex output
@@ -72,7 +71,6 @@ let LatexOutput = (props) => {
 
 
 // Standardized factored latex output
-
 let LatexOutputFactored = (props) => {
   let { input } = props;
   let numbersplit = exponentSeparate(input.number);
@@ -91,6 +89,7 @@ let LatexOutputFactored = (props) => {
     </InlineMath>
   );
 };
+
 
 // Standardized latex input, takes input *array* and organizes latex vs non-latex components to display nicely
 let LatexInput = (props) => {
@@ -151,7 +150,7 @@ let LatexInput = (props) => {
 
 // Multiplying together all meters values input array and turning into a single number, exponent pair.
 // Final output is has number and meterPower properties and corresponds to a number
-// of the form #=(number)*m^{meterPower}
+// of the form (number)*m^{meterPower}
 let meterValues = (array) => {
   let output = {};
   console.log(array);
@@ -206,9 +205,6 @@ let OutputTable = (props) => {
 
 
   // Each input value contains (number, numberExponent, units, unitsExponent,meterExponent,meterValue) properties
-
-
-
 
   return (
     <div>

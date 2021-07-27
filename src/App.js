@@ -57,37 +57,37 @@ class App extends Component {
       <div className="container">
         <h1>
           Natural Units Convertor
-      </h1>
+        </h1>
 
         <p>
           It is standard practice in high-energy physics to use <em>natural units</em> in which \(\hbar=c=k_B=e=1\) and to express all dimensionful quantites in terms of a single unit of one's choosing by using \(\hbar, c,k_B,e\) as conversion factors.
           In the General Relativity community, it's further common to set \(G_N=1\), in which case all quantites can be expressed at unitless numbers.
-      </p>
+        </p>
 
         <p>
-          The calculator below implements such conversions. 
-      </p>
+          The calculator below implements such conversions.
+        </p>
 
         <h3>
           Preset Inputs
-      </h3>
+        </h3>
         <Presets
           handleSubmit={this.handleSubmit}
           presetsSet={presetsSet} />
 
         <h3>
           Manual Input
-      </h3>
-      <p>
-      Exponential notation can be used as in 1.23e4 \(=1.23\times 10^{4}\).
-      </p>
+        </h3>
+        <p>
+          Exponential notation can be used as in 1.23e4 \(=1.23\times 10^{4}\).
+        </p>
         <InputForm
           handleSubmit={this.handleSubmit}
           unitsSet={unitsSet} />
 
         <h3>
           Output
-      </h3>
+        </h3>
         <OutputTable
           input={input}
           GNis1={GNis1}
